@@ -16,8 +16,8 @@ class CategoryCpuSpider(scrapy.Spider):
             
             yield {
                 'name': product.css('a.item-title::text').get(),
-                'price': product.xpath("//div[@class='item-action']//ul//li[@class='price-current']//strong/text()").get()
-                + product.xpath("//div[@class='item-action']//ul//li[@class='price-current']//sup/text()").get(),
+                'price': product.css('div.price-current strong::text()').get()
+                + product.css('div.price-current sup::text()').get(),
 
                 'link': product.css('a.item-title::attr(href)').get(),
                 'promo': product.css('p.item-promo::text').get()
