@@ -15,34 +15,34 @@ class SpiderSpider(scrapy.Spider):
         for business in businessbox:
             try:
                 yield {
-                    'tagline': business.css('h3.title.ng-star-inserted::text').get(),
-                    'location': business.css('p.location.ng-star-inserted::text').get().strip(),
-                    'askingprice': business.css('p.asking-price.ng-star-inserted::text').get().strip(),
-                    'cashflow': business.css('p.cash-flow.ng-star-inserted::text').get().replace('Cash Flow:', '').strip(),
-                    'longdescription': business.css('p.description.ng-star-inserted::text').get()
+                    'Tag Line': business.css('h3.title.ng-star-inserted::text').get(),
+                    'Location': business.css('p.location.ng-star-inserted::text').get(),
+                    'Asking Price': business.css('p.asking-price.ng-star-inserted::text').get(),
+                    'Cash Flow': business.css('p.cash-flow.ng-star-inserted::text').get(), #.replace('Cash Flow:', '').strip(),
+                    'Long Description': business.css('p.description.ng-star-inserted::text').get()
                 }
             except AttributeError:
                 if business.css('p.cash-flow.ng-star-inserted::text').get() is None:
                     yield {
-                        'tagline': business.css('h3.title.ng-star-inserted::text').get(),
-                        'location': business.css('p.location.ng-star-inserted::text').get().strip(),
-                        'askingprice': business.css('p.asking-price.ng-star-inserted::text').get().strip(),
-                        'cashflow': 'n/a',
-                        'longdescription': business.css('p.description.ng-star-inserted::text').get()
+                        'Tag Line': business.css('h3.title.ng-star-inserted::text').get(),
+                        'Location': business.css('p.location.ng-star-inserted::text').get().strip(),
+                        'Asking Price': business.css('p.asking-price.ng-star-inserted::text').get().strip(),
+                        'Cash Flow': 'n/a',
+                        'Long Description': business.css('p.description.ng-star-inserted::text').get()
                     }
                 elif business.css('p.location.ng-star-inserted::text').get() is None:
                     yield {
-                        'tagline': business.css('h3.title.ng-star-inserted::text').get(),
-                        'location': 'n/a',
-                        'askingprice': business.css('p.asking-price.ng-star-inserted::text').get().strip(),
-                        'cashflow': business.css('p.cash-flow.ng-star-inserted::text').get().replace('Cash Flow:', '').strip(),
-                        'longdescription': business.css('p.description.ng-star-inserted::text').get()
+                        'Tag Line': business.css('h3.title.ng-star-inserted::text').get(),
+                        'Location': 'n/a',
+                        'Asking Price': business.css('p.asking-price.ng-star-inserted::text').get().strip(),
+                        'Cash Flow': business.css('p.cash-flow.ng-star-inserted::text').get().replace('Cash Flow:', '').strip(),
+                        'Long Description': business.css('p.description.ng-star-inserted::text').get()
                     }
                 elif business.css('p.location.ng-star-inserted::text').get() is None and business.css('p.cash-flow.ng-star-inserted::text').get() is None:
                     yield {
-                        'tagline': business.css('h3.title.ng-star-inserted::text').get(),
-                        'location': 'n/a',
-                        'askingprice': business.css('p.asking-price.ng-star-inserted::text').get().strip(),
-                        'cashflow': 'n/a',
-                        'longdescription': business.css('p.description.ng-star-inserted::text').get()
+                        'Tag Line': business.css('h3.title.ng-star-inserted::text').get(),
+                        'Location': 'n/a',
+                        'Asking Price': business.css('p.asking-price.ng-star-inserted::text').get().strip(),
+                        'Cash Flow': 'n/a',
+                        'Long Description': business.css('p.description.ng-star-inserted::text').get()
                     }
