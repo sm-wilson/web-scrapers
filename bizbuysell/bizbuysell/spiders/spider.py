@@ -46,3 +46,4 @@ class SpiderSpider(scrapy.Spider):
                         'Cash Flow': 'n/a',
                         'Long Description': business.css('p.description.ng-star-inserted::text').get()
                     }
+        
