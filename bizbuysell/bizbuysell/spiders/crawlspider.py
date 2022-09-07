@@ -6,7 +6,7 @@ from scrapy.linkextractors import LinkExtractor
 class SpiderSpider(CrawlSpider):
     name = 'crawlspider'
     allowed_domains = ['bizbuysell.com']
-    start_urls = ['https://www.bizbuysell.com/online-and-technology-businesses-for-sale/?q=bHQ9MzAsNDAsODAmcHRvPTIwMDAwMDA%3D']
+    start_urls = ['https://www.bizbuysell.com/online-and-technology-businesses-for-sale/18/?q=bHQ9MzAsNDAsODAmcHRvPTIwMDAwMDA%3D']
     rules = (
         Rule(LinkExtractor(allow='Business-Opportunity'), callback='parse_biz'),
     )
