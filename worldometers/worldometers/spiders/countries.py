@@ -19,9 +19,18 @@ class CountriesSpider(scrapy.Spider):
             # abs_url = f'https://www.worldometers.info{link}'
             # abs_url = response.urljoin(link)
 
-            yield response.follow(url=link, callback=self.parse_country)
+            yield response.follow(url=link, callback=self.parse_country, meta={'country_name': name})
 
     def parse_country(self, response):
-        rows = response.xpath("(//table[@class='table table-striped table-bordered table-hover table-condensed table-list'])[1]/tbody/tr")
+        rows = response.xpath(
+            "(//table[@class='table table-striped table-bordered table-hover table-condensed table-list'])[1]/tbody/tr")
+        
         for row in rows:
-            year = row.xpath('.//td[1]')
+            name = response.request.meta['country_name']
+            year = row.xpath('.//td[1]/text()').get()
+            population = row.xpath('.//td[2]/strong/text()').get()
+            yield {
+                'Country': name,
+                'Year': year,
+                'Population': population
+            }
