@@ -5,7 +5,7 @@ from scrapy.linkextractors import LinkExtractor
 class SpiderSpider(CrawlSpider):
     name = 'crawlspider'
     allowed_domains = ['bizbuysell.com']
-    start_urls = ['https://www.bizbuysell.com/online-and-technology-businesses-for-sale/?q=bHQ9MzAsNDAsODAmcHRvPTIwMDAwMDA%3D']
+    start_urls = ['https://www.bizbuysell.com/online-and-technology-businesses-for-sale/18/?q=bHQ9MzAsNDAsODAmcHRvPTIwMDAwMDA%3D']
     rules = (
         Rule(LinkExtractor(allow='Business-Opportunity'), callback='parse_biz'),
     )
@@ -14,6 +14,7 @@ class SpiderSpider(CrawlSpider):
     def parse_biz(self, response):
         try:
             yield {
+                'Link': response.request.url,
                 'Title': response.xpath("//h1[@class='bfsTitle']/text()").get(),
                 'Location': response.xpath("//h2[@class='gray']/text()").get(),
                 'Asking Price': response.xpath("//p[@class='price asking help  odd']/b/text()").get(),
@@ -26,6 +27,7 @@ class SpiderSpider(CrawlSpider):
         except AttributeError:
             if response.xpath("//p[@class='price help  ']/b/text()").get() is None: # Cash Flow is empty
                 yield {
+                    'Link': response.request.url,
                     'Title': response.xpath("//h1[@class='bfsTitle']/text()").get(),
                     'Location': response.xpath("//h2[@class='gray']/text()").get(),
                     'Asking Price': response.xpath("//p[@class='price asking help  odd']/b/text()").get(),
@@ -37,6 +39,7 @@ class SpiderSpider(CrawlSpider):
                 }
             if response.xpath("//p[@class='help niiap ']/b/text()").get() is None: # Inventory is empty
                 yield {
+                    'Link': response.request.url,
                     'Title': response.xpath("//h1[@class='bfsTitle']/text()").get(),
                     'Location': response.xpath("//h2[@class='gray']/text()").get(),
                     'Asking Price': response.xpath("//p[@class='price asking help  odd']/b/text()").get(),
@@ -48,6 +51,7 @@ class SpiderSpider(CrawlSpider):
                 }
             if response.xpath("//p[@class='notDisclosed help  ']/b/text()").get() is None: # EBITDA is empty
                 yield {
+                    'Link': response.request.url,
                     'Title': response.xpath("//h1[@class='bfsTitle']/text()").get(),
                     'Location': response.xpath("//h2[@class='gray']/text()").get(),
                     'Asking Price': response.xpath("//p[@class='price asking help  odd']/b/text()").get(),
